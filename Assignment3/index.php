@@ -1,14 +1,9 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-?>
-
-<?php
 require_once('model/database.php');
 require_once('model/assignment_db.php');
 require_once('model/course_db.php');
 
-$assignment_id = filter_input(INPUT_POST, 'assignment_id', FILTER_VALIDATE_INT);
+$assignment_id = filter_input(INPUT_POST, 'assignment_id', FILTER_VALIDATE_INT) ?: filter_input(INPUT_GET, 'assignment_id', FILTER_VALIDATE_INT);
 $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
 $course_name = filter_input(INPUT_POST, 'course_name', FILTER_SANITIZE_SPECIAL_CHARS);
 
@@ -32,6 +27,30 @@ switch ($action) {
             exit();
         }
         break;
+    case "update_course":
+        if ($course_id && !empty($course_name)) {
+            update_course($course_id, $course_name);
+            header("Location: .?action=list_courses");
+            exit();
+        } else {
+            // Show the pre-filled update form
+            $courses = get_courses();
+            $course = null;
+            foreach ($courses as $c) {
+                if ($c['courseID'] == $course_id) {
+                    $course = $c;
+                    break;
+                }
+            }
+            if ($course) {
+                include('view/update_course.php');
+            } else {
+                $error = "Course not found.";
+                include('view/error.php');
+            }
+        }
+        break;
+
     case "add_assignment":
         if ($course_id && !empty($description)) {
             add_assignment($course_id, $description);
@@ -43,19 +62,37 @@ switch ($action) {
             exit();
         }
         break;
+    case "update_assignment":
+        if ($assignment_id && !empty($description) && $course_id) {
+            update_assignment($assignment_id, $description, $course_id);
+            header("Location: .?action=list_assignments");
+            exit();
+        } else {
+            // Show the pre-filled update form
+            $assignment = get_assignment($assignment_id);
+            $courses = get_courses();
+            if ($assignment) {
+                include('view/update_assignment.php');
+            } else {
+                $error = "Assignment not found.";
+                include('view/error.php');
+            }
+        }
+        break;
     case "delete_course":
         if ($course_id) {
             try {
                 delete_course($course_id);
                 header("Location: .?action=list_courses");
                 exit();
-            } catch (PDOException $e) {
+            } catch (Exception $e) {
                 $error = "You cannot delete a course if assignments exist in the course.";
                 include('view/error.php');
                 exit();
             }
         }
         break;
+
     case "delete_assignment":
         if ($assignment_id) {
             delete_assignment($assignment_id);
@@ -67,6 +104,7 @@ switch ($action) {
             exit();
         }
         break;
+
     default:
         $courses = get_courses();
         $assignments = get_assignments_by_course($course_id);

@@ -43,3 +43,30 @@ function add_assignment($course_id, $description)
     $statement->execute();
     $statement->closeCursor();
 }
+
+function get_assignment($assignment_id)
+{
+    global $db;
+    $query = 'SELECT A.ID, A.Description, A.courseID, C.courseName
+              FROM assignments A
+              LEFT JOIN courses C ON A.courseID = C.courseID
+              WHERE A.ID = :assignment_id';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':assignment_id', $assignment_id, PDO::PARAM_INT);
+    $statement->execute();
+    $assignment = $statement->fetch();
+    $statement->closeCursor();
+    return $assignment;
+}
+
+function update_assignment($assignment_id, $description, $course_id)
+{
+    global $db;
+    $query = 'UPDATE assignments SET Description = :description, courseID = :course_id WHERE ID = :assignment_id';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':assignment_id', $assignment_id, PDO::PARAM_INT);
+    $statement->bindValue(':description', $description, PDO::PARAM_STR);
+    $statement->bindValue(':course_id', $course_id, PDO::PARAM_INT);
+    $statement->execute();
+    $statement->closeCursor();
+}

@@ -12,11 +12,14 @@ include("view/header.php");
         <?php foreach ($courses as $course) : ?>
             <div class="list__row">
                 <div class="list__item">
-
                     <p class="bold"><?= htmlspecialchars($course['courseName']) ?></p>
                 </div>
                 <div class="list__removed">
 
+                    <!-- Edit Button -->
+                    <a href="index.php?action=update_course&course_id=<?= $course['courseID'] ?>">Edit</a>
+
+                    <!-- Delete Button -->
                     <form action="." method="post">
                         <input type="hidden" name="action" value="delete_course">
                         <input type="hidden" name="course_id" value="<?= $course['courseID'] ?>">
@@ -28,7 +31,6 @@ include("view/header.php");
         <?php endforeach; ?>
     </section>
 <?php else : ?>
-
     <p>No Courses exist yet</p>
 <?php endif; ?>
 
@@ -39,20 +41,16 @@ include("view/header.php");
         <input type="hidden" name="action" value="add_course">
         <div class="add__inputs">
             <label>Name:</label>
-
             <input type="text" name="course_name" maxlength="30" placeholder="Name" autofocus required>
         </div>
         <div class="add__addItem">
-
             <button class="add-button bold">Add</button>
         </div>
     </form>
 </section>
 
-
 <p><a href=".?action=list_assignments">View/Edit Assignments</a></p>
 
 <?php
-
 include("view/footer.php");
 ?>

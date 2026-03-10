@@ -22,6 +22,11 @@ include('view/header.php');
             <div class="assignment-item">
                 <p><strong><?= htmlspecialchars($assignment['courseName']) ?></strong></p>
                 <p><?= htmlspecialchars($assignment['Description']) ?></p>
+
+                <!-- Edit Button -->
+                <a href="index.php?action=update_assignment&assignment_id=<?= $assignment['ID'] ?>">Edit</a>
+
+                <!-- Delete Button -->
                 <form action="." method="post">
                     <input type="hidden" name="action" value="delete_assignment">
                     <input type="hidden" name="assignment_id" value="<?= $assignment['ID'] ?>">
@@ -34,8 +39,6 @@ include('view/header.php');
     <?php endif; ?>
 </section>
 
-
-
 <section class="assignment-container">
     <h2>Add Assignment</h2>
 
@@ -43,7 +46,6 @@ include('view/header.php');
         <select name="course_id" required>
             <option value="">Please select</option>
             <?php foreach ($courses as $course) : ?>
-
                 <option value="<?= $course['courseID'] ?>">
                     <?= htmlspecialchars($course['courseName']); ?>
                 </option>
@@ -54,7 +56,6 @@ include('view/header.php');
         <button type="submit" name="action" value="add_assignment">Add</button>
     </form>
 </section>
-
 
 <p><a href=".?action=list_courses">View/Edit Courses</a></p>
 
