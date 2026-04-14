@@ -1,0 +1,8 @@
+cd557378-1c83-4935-9640-d5161d0892b8 	 [2026-04-13 22:44:56] 	 Error: Intentional test error	GET	/error
+ce7854bb-1190-4e12-baf2-d13a77640a8d 	 [2026-04-13 22:45:16] 	 Error: Intentional test error	GET	/error
+81e30ca3-0ae3-4cdd-aa9e-bd2b74bf6d65 	 [2026-04-13 22:45:17] 	 Error: Intentional test error	GET	/error
+c2675567-0a06-40b5-ae40-f6ab4616a737 	 [2026-04-13 22:45:17] 	 Error: Intentional test error	GET	/error
+bcebbe13-d24c-4543-8703-bd9a93ee4a41 	 [2026-04-13 22:45:18] 	 Error: Intentional test error	GET	/error
+8f88a498-b8f6-4a57-9aff-2662ed19edf6 	 [2026-04-13 22:45:18] 	 Error: Intentional test error	GET	/error
+801f294b-8198-4d78-acce-6c037e4f1095 	 [2026-04-13 22:45:19] 	 Error: Intentional test error	GET	/error
+6104ac0b-5ef4-4fa6-aa05-464d6bfdfeee 	 [2026-04-13 22:45:19] 	 Error: Intentional test error	GET	/error
